@@ -1,12 +1,19 @@
-class Brain(object):
+import cryptolibrary
+from enum import Enum, auto
+
+class TradeMethod(Enum):
+	FIBONACCI = auto()
+	MACD = auto()
+
+class AI(object):
 
 	online = False
-	tradingMethod = ""
+	tradingMethod = TradeMethod.MA
 	apiKey = ""
 
-	"""docstring for Brain"""
+	"""docstring for AI"""
 	def __init__(self):
-		super(Brain, self).__init__()
+		super(AI, self).__init__()
 	
 	def run(self):
 		while self.online:
@@ -15,8 +22,9 @@ class Brain(object):
 			print("Running...")
 
 	def activate(self):
-		self.online = True
-		self.run()
+		if cryptolibrary.testConnection() and cryptolibrary.testTrading(self.apiKey):
+			self.online = True
+			self.run()
 
 	def stop(self):
 		self.online = False
